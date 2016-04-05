@@ -16,10 +16,10 @@ int count(std::vector<std::pair<int, int>> pairs, int size, std::vector<int> pic
 {
   if (pairs.empty())
   {
-  	if (picks.size() == size)
-  	  return 1;
-  	else
-  	  return 0;
+    if (picks.size() == size)
+      return 1;
+    else
+      return 0;
   }
 
   using value_type = decltype(pairs);
