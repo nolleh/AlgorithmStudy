@@ -1,2 +1,8 @@
+# for binary
+*
+!*.*
+
 *.sublime-workspace
 .DS_Store
+**/*.o
+
