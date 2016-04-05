@@ -31,16 +31,16 @@ int count(std::vector<std::pair<int, int>> pairs, int size, std::vector<int> pic
   std::vector<int> new_picks;
   
   std::copy_if(
-  	  tail, end(pairs), std::back_inserter(pick_rest), 
+  	  tail, end(pairs), back_inserter(pick_rest), 
   	  [&](auto& pair)
   	  {
   	  	return ((pair.first != head->first) && (pair.second != head->first) &&
   	           (pair.first != head->second) && (pair.second != head->second));
   	  });
 
-  std::copy(tail, end(pairs), std::back_inserter(unpick_rest));
+  std::copy(tail, end(pairs), back_inserter(unpick_rest));
 
-  std::copy(begin(picks), end(picks), std::back_inserter(new_picks));
+  std::copy(begin(picks), end(picks), back_inserter(new_picks));
   new_picks.push_back(head->first);
   new_picks.push_back(head->second);
 
