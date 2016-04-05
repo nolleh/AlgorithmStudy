@@ -5,7 +5,7 @@
 auto make_test_pairs()
 {
   std::vector<std::pair<std::vector<std::pair<int, int>>, int>> pairs {
-  	{ {{0,1}}, 2 },
+    { {{0,1}}, 2 },
     { {{0,1}, {1,2}, {2,3}, {3,0}, {0,2}, {1,3}}, 4 },
     { {{0,1}, {0,2}, {1,2}, {1,3}, {1,4}, {2,3}, {2,4}, {3,4}, {3,5}, {4,5}}, 6}  };
 
@@ -17,11 +17,11 @@ int count(std::vector<std::pair<int, int>> pairs, int size, std::vector<int> pic
   if (pairs.empty())
   {
   	if (picks.size() == size)
-  		return 1;
+  	  return 1;
   	else
-  		return 0;
+  	  return 0;
   }
-  
+
   using value_type = decltype(pairs);
 
   auto head = begin(pairs);
@@ -51,11 +51,11 @@ int main()
 {
   for (auto& test: make_test_pairs())
   {
-  	decltype(test.first) friends;
-  	decltype(test.second) size;
-  	std::tie(friends, size) = test;
-  	for (auto& pair: friends)
-  	{
+    decltype(test.first) friends;
+    decltype(test.second) size;
+    std::tie(friends, size) = test;
+    for (auto& pair: friends)
+    {
   	  std::cout << "(" << pair.first << "," << pair.second << ") ";
     }
     std::cout << ": " << count(friends, size, {}) << std::endl;
