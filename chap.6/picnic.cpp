@@ -49,7 +49,7 @@ int count(std::vector<std::pair<int, int>> pairs, int size, std::vector<int> pic
 
 int main()
 {
-  for (auto& test: make_test_pairs())
+  for (auto test: make_test_pairs())
   {
     decltype(test.first) friends;
     decltype(test.second) size;
