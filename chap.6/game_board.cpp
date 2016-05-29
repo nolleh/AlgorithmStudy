@@ -13,7 +13,8 @@ auto make_test_pairs()
 {
   std::vector<std::pair<std::pair<int, int>, std::vector<std::string>>> pairs {
      { {3, 7},  {"#.....#", "#.....#", "##...##"}},
-     { {3, 7},  {"#.....#", "#.....#", "##..###"}}};
+     { {3, 7},  {"#.....#", "#.....#", "##..###"}},
+     { {4, 5},  {"##.##", "#....", "##..#", "##..#"}}};
      // { {8, 10}, {"##########", "#........#", "#........#", "#........#", "#........#", "#........#", "#........#", "##########"}}};
 
   return pairs;
@@ -29,8 +30,11 @@ int game_board2(std::vector<std::string> maps, int col_size, int i)
 {
   if (maps.size() * col_size - 1 == i) 
   {
-    std::cout << maps << std::endl;
-    if (check_all(maps))  return 1;
+    if (check_all(maps)) 
+    {
+      std::cout << maps << std::endl;
+      return 1;
+    } 
     else return 0;
   }
 
@@ -67,6 +71,7 @@ int game_board3(std::vector<std::string> maps, int col_size, int i, int e)
     case 0:
       if (maps[r][c+1] != '.' || maps[r+1][c+1] != '.') return 0;
       maps[r][c+1] = '0'; maps[r+1][c+1] = '0';
+      break;
     // ㄴ
     case 1:
       if (maps[r+1][c] != '.' || maps[r+1][c+1] != '.') return 0;
@@ -105,13 +110,10 @@ std::ostream& operator<<(std::ostream& os, const std::pair<int,int>& pair)
 
 std::ostream& operator<<(std::ostream& os, const std::vector<std::string>& vec_string)
 {
-  // os << "[";
-  os << std::endl;
   for (auto& str : vec_string)
   {
-    os << str << std::endl;
+    os << std::endl << str;
   }
-  // os << "]";
   return os;
 }
 
@@ -123,8 +125,8 @@ int main()
     std::vector<std::string> boards;
     std::tie(array_info, boards) = test;
 
-    std::cout << "input:" << array_info << ", col_size:" << array_info.second << "," << boards << std::endl;
-    std::cout << "output:" << game_board(boards, array_info.second) << std::endl;
+    std::cout << "input:" << array_info << ", col_size:" << array_info.second << boards << std::endl;
+    std::cout << "output:" << game_board(boards, array_info.second) << std::endl << std::endl;
   }
   return 0;
 }
