@@ -14,8 +14,8 @@ auto make_test_pairs()
   std::vector<std::pair<std::pair<int, int>, std::vector<std::string>>> pairs {
      { {3, 7},  {"#.....#", "#.....#", "##...##"}},
      { {3, 7},  {"#.....#", "#.....#", "##..###"}},
-     { {4, 5},  {"##.##", "#....", "##..#", "##..#"}}};
-     // { {8, 10}, {"##########", "#........#", "#........#", "#........#", "#........#", "#........#", "#........#", "##########"}}};
+     { {4, 5},  {"##.##", "#....", "##..#", "##..#"}},
+     { {8, 10}, {"##########", "#........#", "#........#", "#........#", "#........#", "#........#", "#........#", "##########"}}};
 
   return pairs;
 }
@@ -47,11 +47,8 @@ int game_board2(std::vector<std::string> maps, int col_size, int i)
   }
   else
   {
-    int pick = game_board3(maps, col_size, i, 0) + game_board3(maps, col_size, i, 1) + 
-               game_board3(maps, col_size, i, 2) + game_board3(maps, col_size, i, 3);
-    int unpick = game_board2(maps, col_size, i+1);
-
-    return pick + unpick;
+    return game_board3(maps, col_size, i, 0) + game_board3(maps, col_size, i, 1) + 
+           game_board3(maps, col_size, i, 2) + game_board3(maps, col_size, i, 3);
   }
 }
 
