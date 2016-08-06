@@ -38,7 +38,7 @@ clocksWindTo12 i clocks clicks swts
   where effectiveSwitches = doIf (not.null) (filter (elem i)) swts 
         clock = clocks !! i
 
--- i 번째 시계를 스위치를 눌러 한번 돌린다. 
+-- 영향을 받는 시계들을 한번씩 감는다.
 clickSwitch :: [Int] -> [(Int, Int)] -> Clocks
 clickSwitch switchEffects clocks = 
   mapIf (\(i, c) -> elem i switchEffects) (\(i, c)-> (i, clockWind c)) clocks
