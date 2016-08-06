@@ -15,11 +15,12 @@ clockWise clocks = clockWiseInner zipedClocks zipedClocks 0 switches
 clockWiseInner :: Clocks -> Clocks -> Int -> [[Int]] -> (Clocks, Int)
 clockWiseInner [] clocks clicks _ = (clocks, clicks)
 clockWiseInner _ clocks clicks [[]] = (clocks, clicks)
-clockWiseInner (x:xs) clocks clicks swts = -- trace ("swts" ++ show swts)$
+clockWiseInner (x:xs) clocks clicks swts = 
   minimumBy minimumSnd $
-  map (\(cls, count) -> clockWiseInner xs cls count uneffectiveSwitches) $ -- > [Int]
+  map (\(cls, count) -> if clicks - count == 0 then clockWiseInner xs cls count swts
+      else clockWiseInner xs cls count uneffectiveSwitches) $ -- > [Int]
     clocksWindTo12 (fst x) clocks clicks swts
-  where uneffectiveSwitches = -- trace ("i:" ++ show (fst cl) ++ "swts" ++ show swts) $ 
+  where uneffectiveSwitches =
           doIf (not.null) (filter (not.elem (fst x))) swts
 
 minimumSnd (a1, b1) (a2, b2)
@@ -30,11 +31,10 @@ minimumSnd (a1, b1) (a2, b2)
 clocksWindTo12 :: Int -> Clocks -> Int -> [[Int]] -> [(Clocks, Int)]
 clocksWindTo12 _ clocks clicks [[]] = [(clocks, clicks)]
 clocksWindTo12 i clocks clicks swts
-  | (snd clock == 0) || (snd clock == 12) = trace ("i:" ++ show i ++ ", clicks:" ++ show clicks) $ [(clocks, clicks)]
-  | null effectiveSwitches = trace ("i:" ++ show i ++  ", null! swts:" ++ show swts) $ [(clocks, 1000)]
+  | (snd clock == 0) || (snd clock == 12) = [(clocks, clicks)]
+  | null effectiveSwitches = [(clocks, 1000)]
   | otherwise = 
-      -- trace ("i :" ++ show i ++ " to12 swts" ++ show swts)$
-      concatMap (\clos -> trace ("i:" ++ show i ++ ", clocks:" ++ show clos ++ ", effectiveSwitches:" ++ show effectiveSwitches) $ clocksWindTo12 i clos (clicks + 1) effectiveSwitches) $
+      concatMap (\clos -> clocksWindTo12 i clos (clicks + 1) effectiveSwitches) $
       map (\effect -> clickSwitch effect clocks) effectiveSwitches -- [[클릭해본 결과], [다른방법으로 클릭해본 결과]]
   where effectiveSwitches = doIf (not.null) (filter (elem i)) swts 
         clock = clocks !! i
@@ -55,4 +55,4 @@ main = do
   -- print $ clocksWindTo12 1 (zip [0..] [12, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12]) 0 switches
   -- print $ clocksWindTo12 15 (zip [0..] [12, 9, 3, 12, 6, 6, 9, 3, 12, 9, 12, 9, 12, 12, 6, 6]) 0 switches
   print $ clockWise [12, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12]
-  -- print $ clockWise [12, 9, 3, 12, 6, 6, 9, 3, 12, 9, 12, 9, 12, 12, 6, 6]
+  print $ clockWise [12, 9, 3, 12, 6, 6, 9, 3, 12, 9, 12, 9, 12, 12, 6, 6]
