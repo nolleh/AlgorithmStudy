@@ -14,24 +14,29 @@ fenceIter (l:ls) acc = fenceIter ls $ fenceAdd l acc
 fence ls = getSize $ maximumBy (comparing getSize) $ fenceIter ls []
 getSize (s, _, _) = s
 
-
 -- O(nlgn)
 fence2 :: [Int] -> Int
-fence2 ls = maximum [left, right, (overlap (take mid ls) (drop mid ls) 1000 0)]
+fence2 [] = 0
+fence2 ls =
+  -- drop mid ls
+  maximum [fence2 left, fence2 right, overlap (reverse left) right 1000 1]
   where
-    mid = div (length ls) 2
-    left = fence2 $ take mid ls
-    right = fence2 $ drop mid ls
-  -- actually not n complexity, in FP
-  -- 
+    ln = length ls
+    mid = div ln 2
+    left = take mid ls
+    right
+      | mid == 0 = []
+      | otherwise = drop mid ls
     overlap :: [Int] -> [Int] -> Int -> Int -> Int
+    overlap [] _ _ _ = 0
+    overlap _ [] _ _ = 0
     overlap lfst@(lf:lfs) rgst@(rg:rgs) h cnt
-      | rgsTurn = max (newExnt lf) $ overlap lfst rgs (newh lf) incnt
-      | otherwise = max (newExnt rg) $ overlap lfs rgst (newh rg) incnt
+      | rgsTurn = max (newExnt rg) $ overlap lfst rgs (newh rg) incnt
+      | otherwise = max (newExnt lf) $ overlap lfs rgst (newh lf) incnt
       where 
-        rgsTurn = mod cnt 2 == 0
+        rgsTurn = mod cnt 2 == 1
         newh ph = min h ph
-        newExnt ph = cnt * newh ph
+        newExnt ph = cnt * (newh ph)
         incnt = cnt + 1
 
 main = do
