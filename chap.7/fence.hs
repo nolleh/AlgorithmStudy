@@ -18,7 +18,6 @@ getSize (s, _, _) = s
 fence2 :: [Int] -> Int
 fence2 [] = 0
 fence2 ls =
-  -- drop mid ls
   maximum [fence2 left, fence2 right, overlap (reverse left) right 1000 1]
   where
     ln = length ls
@@ -34,15 +33,15 @@ fence2 ls =
       | rgsTurn = max (newExnt rg) $ overlap lfst rgs (newh rg) incnt
       | otherwise = max (newExnt lf) $ overlap lfs rgst (newh lf) incnt
       where 
-        rgsTurn = mod cnt 2 == 1
+        rgsTurn = lf < rg
         newh ph = min h ph
         newExnt ph = cnt * (newh ph)
         incnt = cnt + 1
 
 main = do
-  -- print $ fence [7, 1, 5, 9, 6, 7, 3] -- 20
-  -- print $ fence [1, 4, 4, 4, 4, 1, 1] -- 16
-  -- print $ fence [1, 8, 2, 2] -- 8
+  print $ fence [7, 1, 5, 9, 6, 7, 3] -- 20
+  print $ fence [1, 4, 4, 4, 4, 1, 1] -- 16
+  print $ fence [1, 8, 2, 2] -- 8
   print $ fence2 [7, 1, 5, 9, 6, 7, 3] -- 20
   print $ fence2 [1, 4, 4, 4, 4, 1, 1] -- 16
   print $ fence2 [1, 8, 2, 2] -- 8
