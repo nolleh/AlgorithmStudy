@@ -17,7 +17,7 @@ getSize (s, _, _) = s
 -- O(nlgn)
 -- it is actually not true, 
 -- in haskell whose lack of ability to Random Access.
--- just immitate the algorithms.
+-- just imitate the algorithms.
 -- there may exists more friendly algorithm to FP...
 fence2 :: [Int] -> Int
 fence2 [] = 0
