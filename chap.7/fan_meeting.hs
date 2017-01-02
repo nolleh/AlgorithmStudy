@@ -8,10 +8,6 @@ fanMeeting hipers fans =
     ln = length hipers
     lnFans = length fans 
     mid = div ln 2
-    left ls = take mid ls
-    right ls
-      | mid == 0 = []
-      | otherwise = drop mid ls
     newFans = [take ln $ drop a fans | a <- [0..(lnFans - ln)]]
 
 fanMeetingIter (h:[]) (f:[]) = 
