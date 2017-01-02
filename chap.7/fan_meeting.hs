@@ -2,8 +2,7 @@ import Debug.Trace
 
 fanMeeting hipers fans = 
   length $
-  filter (== ln) $
-  map (fanMeetingIter hipers) newFans
+  filter (\x -> ln == fanMeetingIter hipers x) newFans
   where
     ln = length hipers
     lnFans = length fans 
