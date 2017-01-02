@@ -21,7 +21,6 @@ fanMeetingIter hipers fans =
       | mid == 0 = []
       | otherwise = drop mid ls
 
-
 highfive :: Char -> Char -> Int
 highfive h f 
   | h == 'M' && f == 'M' = 0
