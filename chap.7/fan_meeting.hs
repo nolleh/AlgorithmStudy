@@ -10,9 +10,7 @@ fanMeeting hipers fans =
     mid = div ln 2
     newFans = [take ln $ drop a fans | a <- [0..(lnFans - ln)]]
 
-fanMeetingIter (h:[]) (f:[]) = 
-  -- trace ("h:" ++ show h ++ "f:" ++ show f) $ 
-  highfive h f
+fanMeetingIter (h:[]) (f:[]) = highfive h f
 fanMeetingIter hipers fans = 
   fanMeetingIter (left hipers) (left fans) + fanMeetingIter (right hipers) (right fans)
   where
